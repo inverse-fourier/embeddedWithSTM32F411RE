@@ -4,6 +4,8 @@ PROJECT = 0_led_toggle
 BUILD_DIR = build
 SIZE = arm-none-eabi-size
 OBJCOPY = arm-none-eabi-objcopy
+OBJDUMP = arm-none-eabi-objdump
+READELF = arm-none-eabi-readelf
 
 # Script paths
 LDSCRIPT = ../linkerScript/STM32F411RETX_FLASH.ld
@@ -75,6 +77,23 @@ $(BUILD_DIR)/%.hex: $(BUILD_DIR)/%.elf
 # Convert the ELF executable into a raw binary file (used by st-link utilities)
 $(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.elf
 	$(OBJCOPY) -O binary $< $@
+
+#Dissasembly Rule
+# Generate a human-readable assembly listing from the ELF file for debugging and analysis
+disasm: $(BUILD_DIR)/$(PROJECT).elf
+	$(OBJDUMP) -d $< > $(BUILD_DIR)/$(PROJECT).asm
+
+# Disassembly with source if debug info exists
+# Generate a disassembly listing that includes source code lines (requires -g flag during compilation)
+disasm-src: $(BUILD_DIR)/$(PROJECT).elf
+	$(OBJDUMP) -d -S $< > $(BUILD_DIR)/$(PROJECT)_src.asm
+
+# Memory layout targets
+layout: $(BUILD_DIR)/$(PROJECT).elf
+	$(READELF) -S $<
+
+prog-header: $(BUILD_DIR)/$(PROJECT).elf
+	$(READELF) -l $<
 
 # Directory Creation Rule
 # Create the build directory if it doesn't exist

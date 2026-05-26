@@ -37,9 +37,8 @@ int main(void){
     
     GPIOA_OD_R ^= LED_PIN;
     for(int i=0;i<500000;i++){}
-
+    
     }
-
     return 0;
 }
 

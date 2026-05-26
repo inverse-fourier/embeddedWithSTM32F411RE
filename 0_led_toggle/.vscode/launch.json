@@ -1,0 +1,35 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Cortex Debug (OpenOCD)",
+            "type": "cortex-debug",
+            "request": "launch",
+            "cwd": "${workspaceRoot}",
+            
+            // 1. Path to your compiled .elf file from your Makefile
+            "executable": "${workspaceRoot}/build/0_led_toggle.elf",
+            
+            // 2. Tell it to use your system's gdb-multiarch
+            "gdbPath": "/usr/bin/gdb-multiarch",
+            
+            // 3. Choose your hardware debug server (e.g., openocd, jlink, stutil)
+            "servertype": "openocd",
+            
+            // 4. Point to your specific hardware interface and chip target files
+            "configFiles": [
+                "interface/stlink.cfg",
+                "target/stm32f4x.cfg" 
+            ],
+            
+            // 5. Break automatically at main() when launching
+            "runToEntryPoint": "main",
+
+            "liveWatch": {
+                "enabled": true,
+                "samplesPerSecond": 4
+            }
+            
+        }
+    ]
+}
