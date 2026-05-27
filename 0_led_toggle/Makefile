@@ -26,8 +26,10 @@ MCU = $(CPU) -mthumb
 # -g 		-	Include debugging information in the output for GDB
 # -O0		-	Optimization level 0 (no optimization, better for debugging)
 # -std=gnu11	-	Use the GNU C11 standard for C code
+# -I<path> 	-\tAdd directory to header search path for includes
 #===============================================
-CFLAGS = $(MCU) -Wall -g -O0 -std=gnu11
+INCLUDES = -I. -I..
+CFLAGS = $(MCU) -Wall -g -O0 -std=gnu11 $(INCLUDES)
 
 # Linker flags
 #===============================================
