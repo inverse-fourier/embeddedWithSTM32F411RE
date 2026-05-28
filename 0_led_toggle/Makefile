@@ -8,8 +8,8 @@ OBJDUMP = arm-none-eabi-objdump
 READELF = arm-none-eabi-readelf
 
 # Script paths
-LDSCRIPT = ../linkerScript/STM32F411RETX_FLASH.ld
-STARTUP_SCRIPT = ../startupScript/startup_stm32f411retx.s
+LDSCRIPT = STM32F411RETX_FLASH.ld
+STARTUP_SCRIPT = startup/startup_stm32f411retx.s
 
 # CPU architecture settings for STM32F411RE
 CPU = -mcpu=cortex-m4
@@ -28,7 +28,7 @@ MCU = $(CPU) -mthumb
 # -std=gnu11	-	Use the GNU C11 standard for C code
 # -I<path> 	-\tAdd directory to header search path for includes
 #===============================================
-INCLUDES = -I. -I..
+INCLUDES = -I. -Iinc
 CFLAGS = $(MCU) -Wall -g -O0 -std=gnu11 $(INCLUDES)
 
 # Linker flags
@@ -53,10 +53,10 @@ OBJECTS		=	$(BUILD_DIR)/main.o \
 # Default build target: generates the ELF, BIN, and HEX files, then prints the size
 all: $(BUILD_DIR)/$(PROJECT).elf $(BUILD_DIR)/$(PROJECT).bin $(BUILD_DIR)/$(PROJECT).hex
 
-# Compilation Rule for main.c
-# Compile main.c into an object file (main.o)
+# Compilation Rule for source files in src
+# Compile each C source file into an object file under build/
 # The '| $(BUILD_DIR)' is an order-only prerequisite, ensuring the build directory exists without forcing a rebuild if its timestamp changes.
-$(BUILD_DIR)/%.o: %.c | $(BUILD_DIR)
+$(BUILD_DIR)/%.o: src/%.c | $(BUILD_DIR)
 	$(CC) -c $(CFLAGS) $< -o $@
 
 # Compilation Rule for the startup script
