@@ -1,3 +1,6 @@
+#ifndef __MYSTM32HEADER_H
+#define __MYSTM32HEADER_H
+
 #include <stdint.h>
 #define PERPH_BASE          (0X40000000UL)
 #define AHB1_OFFSET         (0X00020000UL)
@@ -65,7 +68,7 @@ typedef struct
 #define RCC                 ((RCC_TypeDef*)RCC_BASE)
 #define GPIOA               ((GPIO_TypeDef *)GPIOA_BASE)
 
-
+#endif /* __MYSTM32HEADER_H */
 
 
 
