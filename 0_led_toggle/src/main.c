@@ -15,7 +15,7 @@ int main(void){
         // 3. Set PA5 as high
         //GPIOA_OD_R |= LED_PIN;
         GPIOA->ODR ^= PA5;
-        for(int i=0;i<100000;i++){}
+        for(int i=0;i<50000;i++){}
     }
     return 0;
 }
