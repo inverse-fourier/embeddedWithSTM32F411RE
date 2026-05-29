@@ -1,6 +1,6 @@
 # Toolchain definitions
 CC = arm-none-eabi-gcc
-PROJECT = 2_gpio_input
+PROJECT = 3_uart_tx
 BUILD_DIR = build
 SIZE = arm-none-eabi-size
 OBJCOPY = arm-none-eabi-objcopy
@@ -44,7 +44,8 @@ LDFLAGS = $(MCU) -T$(LDSCRIPT) --specs=nano.specs  -Wl,-Map=$(BUILD_DIR)/$(PROJE
 OBJECTS		=	$(BUILD_DIR)/main.o \
 				$(BUILD_DIR)/startup_stm32f411retx.o \
 				$(BUILD_DIR)/syscalls.o \
-				$(BUILD_DIR)/sysmem.o
+				$(BUILD_DIR)/sysmem.o \
+				$(BUILD_DIR)/usart.o
 
 # ==============================================================================
 # Build Targets and Rules
@@ -120,10 +121,21 @@ flash: all
 clean:
 	rm -rf $(BUILD_DIR)
 
+monitor:
+	@PORT=$$(ls /dev/ttyACM* /dev/ttyUSB* 2>/dev/null | head -n 1); \
+	if [ -z "$$PORT" ]; then \
+		echo "No serial port found. Please connect your device and try again."; \
+		exit 1; \
+	fi; \
+	echo "Monitoring serial output on $$PORT..."; \
+	picocom -b 115200 --imap lfcrlf "$$PORT"
+	
+
 burn:
 	$(MAKE) clean
 	$(MAKE) all
 	$(MAKE) flash
+	$(MAKE) monitor
 
 # Phony targets: declare targets that are not physical files
-.PHONY: all clean flash burn
+.PHONY: all clean flash monitor burn

@@ -120,5 +120,10 @@ flash: all
 clean:
 	rm -rf $(BUILD_DIR)
 
+burn:
+	$(MAKE) clean
+	$(MAKE) all
+	$(MAKE) flash
+
 # Phony targets: declare targets that are not physical files
-.PHONY: all clean flash
+.PHONY: all clean flash burn

@@ -1,6 +1,6 @@
 # Toolchain definitions
 CC = arm-none-eabi-gcc
-PROJECT = 0_led_toggle
+PROJECT = 1_gpio_bsrr
 BUILD_DIR = build
 SIZE = arm-none-eabi-size
 OBJCOPY = arm-none-eabi-objcopy
@@ -120,5 +120,10 @@ flash: all
 clean:
 	rm -rf $(BUILD_DIR)
 
+burn:
+	$(MAKE) clean
+	$(MAKE) all
+	$(MAKE) flash
+
 # Phony targets: declare targets that are not physical files
-.PHONY: all clean flash
+.PHONY: all clean flash burn
