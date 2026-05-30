@@ -129,13 +129,19 @@ monitor:
 	fi; \
 	echo "Monitoring serial output on $$PORT..."; \
 	picocom -b 115200 --imap lfcrlf "$$PORT"
-	
 
 burn:
+	@echo -e "\n$(GREEN)🧹 Wiping old build files...$(NC)"
 	$(MAKE) clean
+	
+	@echo -e "\n$(GREEN)🔨 Compiling new C code...$(NC)"
 	$(MAKE) all
+	
+	@echo -e "\n$(GREEN)✅ Flashing to the microcontroller...$(NC)"
 	$(MAKE) flash
+
+	@echo -e "\n$(GREEN)📡 Starting serial monitor...$(NC)"
 	$(MAKE) monitor
 
 # Phony targets: declare targets that are not physical files
-.PHONY: all clean flash monitor burn
+.PHONY: all clean flash monitor burn reset

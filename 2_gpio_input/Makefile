@@ -122,8 +122,13 @@ clean:
 
 burn:
 	$(MAKE) clean
+	@echo "🧹 Wiping old build files..."
+
 	$(MAKE) all
+	@echo "🔨 Compiling new C code..."
+
 	$(MAKE) flash
+	@echo "✅ Flashing to the microcontroller..."
 
 # Phony targets: declare targets that are not physical files
 .PHONY: all clean flash burn

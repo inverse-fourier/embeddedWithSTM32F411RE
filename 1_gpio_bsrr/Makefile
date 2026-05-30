@@ -121,8 +121,13 @@ clean:
 	rm -rf $(BUILD_DIR)
 
 burn:
+	@echo -e "\n$(GREEN)🧹 Wiping old build files...$(NC)"
 	$(MAKE) clean
+	
+	@echo -e "\n$(GREEN)🔨 Compiling new C code...$(NC)"
 	$(MAKE) all
+	
+	@echo -e "\n$(GREEN)✅ Flashing to the microcontroller...$(NC)"
 	$(MAKE) flash
 
 # Phony targets: declare targets that are not physical files

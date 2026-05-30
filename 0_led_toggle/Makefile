@@ -1,3 +1,10 @@
+
+SHELL := /bin/bash
+
+# Color Variables
+GREEN = \033[1;32m
+NC = \033[0m  # No Color (Resets the terminal back to default)
+
 # Toolchain definitions
 CC = arm-none-eabi-gcc
 PROJECT = 0_led_toggle
@@ -121,9 +128,15 @@ clean:
 	rm -rf $(BUILD_DIR)
 
 burn:
+	@echo -e "\n$(GREEN)🧹 Wiping old build files...$(NC)"
 	$(MAKE) clean
+	
+	@echo -e "\n$(GREEN)🔨 Compiling new C code...$(NC)"
 	$(MAKE) all
+	
+	@echo -e "\n$(GREEN)✅ Flashing to the microcontroller...$(NC)"
 	$(MAKE) flash
+	
 
 # Phony targets: declare targets that are not physical files
 .PHONY: all clean flash burn
