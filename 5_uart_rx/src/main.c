@@ -16,26 +16,14 @@ int main(void){
     while(1){
         if(uart2_read() == '1'){
             GPIOA->ODR |= PA5;
+            printf("\r\nHello World!\r\n");
         }
         else{
             GPIOA->ODR &= ~PA5;
+            printf("\r\nGoodbye World!\r\n");
         }
     }
     
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
